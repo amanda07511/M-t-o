@@ -11,7 +11,7 @@ import UIKit
 class City {
     
     //MARK: Properties
-    
+    var id: Int
     var name: String
     var wMain: String
     var wDescription: String
@@ -22,7 +22,22 @@ class City {
     var humidity: Double
     var icon: String
     
-    init?(name: String, wMain: String, wDescription: String, temp: Double, tempmax: Double, tempmin: Double, presure: Double, humidity: Double, icon: String  ) {
+    //MARK: Types
+    
+    struct PropertyKey {
+        static let id = "id"
+        static let name = "name"
+        static let wMain = "wMain"
+        static let wDescription = "wDescription"
+        static let temp = "temp"
+        static let tempmax = "tempmax"
+        static let tempmin = "tempmin"
+        static let presure = "presure"
+        static let humidity = "humidity"
+        static let icon = "icon"
+    }
+    
+    init?(id:Int, name: String, wMain: String, wDescription: String, temp: Double, tempmax: Double, tempmin: Double, presure: Double, humidity: Double, icon: String  ) {
         
         // Initialization should fail if there is no name.
         guard !name.isEmpty else {
@@ -30,6 +45,7 @@ class City {
         }
         
         // Initialize stored properties.
+        self.id = id
         self.name = name
         self.wMain = wMain
         self.wDescription = wDescription
