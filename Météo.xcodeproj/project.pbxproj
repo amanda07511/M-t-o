@@ -15,6 +15,9 @@
 		05322E8D1E5455D500BD593C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05322E8B1E5455D500BD593C /* LaunchScreen.storyboard */; };
 		05322E981E5455D500BD593C /* Me_te_oTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05322E971E5455D500BD593C /* Me_te_oTests.swift */; };
 		05322EA31E54645B00BD593C /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05322EA21E54645B00BD593C /* RestApiManager.swift */; };
+		054C1FB31E9D114E003B7479 /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C1FB21E9D114E003B7479 /* DetailsTableViewCell.swift */; };
+		054C1FB51E9D171D003B7479 /* DetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C1FB41E9D171D003B7479 /* DetailsTableViewController.swift */; };
+		054C1FB91E9D17AD003B7479 /* Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C1FB81E9D17AD003B7479 /* Detail.swift */; };
 		05CAB5F01E8BE2AF00B30E09 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CAB5EF1E8BE2AF00B30E09 /* CityTableViewCell.swift */; };
 		05CAB5F21E8BE75200B30E09 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CAB5F11E8BE75200B30E09 /* CityTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +45,9 @@
 		05322E971E5455D500BD593C /* Me_te_oTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Me_te_oTests.swift; sourceTree = "<group>"; };
 		05322E991E5455D500BD593C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05322EA21E54645B00BD593C /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
+		054C1FB21E9D114E003B7479 /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
+		054C1FB41E9D171D003B7479 /* DetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTableViewController.swift; sourceTree = "<group>"; };
+		054C1FB81E9D17AD003B7479 /* Detail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Detail.swift; sourceTree = "<group>"; };
 		05CAB5EF1E8BE2AF00B30E09 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityTableViewCell.swift; path = ../CityTableViewCell.swift; sourceTree = "<group>"; };
 		05CAB5F11E8BE75200B30E09 /* CityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +101,9 @@
 				05322EA21E54645B00BD593C /* RestApiManager.swift */,
 				051B95381E54811A00873E78 /* City.swift */,
 				05CAB5F11E8BE75200B30E09 /* CityTableViewController.swift */,
+				054C1FB21E9D114E003B7479 /* DetailsTableViewCell.swift */,
+				054C1FB41E9D171D003B7479 /* DetailsTableViewController.swift */,
+				054C1FB81E9D17AD003B7479 /* Detail.swift */,
 			);
 			path = "Météo";
 			sourceTree = "<group>";
@@ -159,6 +168,7 @@
 					05322E7E1E5455D500BD593C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 8XUA3C78TU;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					05322E921E5455D500BD593C = {
@@ -212,12 +222,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054C1FB51E9D171D003B7479 /* DetailsTableViewController.swift in Sources */,
 				05CAB5F21E8BE75200B30E09 /* CityTableViewController.swift in Sources */,
+				054C1FB91E9D17AD003B7479 /* Detail.swift in Sources */,
 				05322E851E5455D500BD593C /* CityViewController.swift in Sources */,
 				05322E831E5455D500BD593C /* AppDelegate.swift in Sources */,
 				05CAB5F01E8BE2AF00B30E09 /* CityTableViewCell.swift in Sources */,
 				051B95391E54811A00873E78 /* City.swift in Sources */,
 				05322EA31E54645B00BD593C /* RestApiManager.swift in Sources */,
+				054C1FB31E9D114E003B7479 /* DetailsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,11 +369,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 8XUA3C78TU;
 				INFOPLIST_FILE = "Météo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Me-te-o";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Météo/Météo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -369,11 +385,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 8XUA3C78TU;
 				INFOPLIST_FILE = "Météo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Me-te-o";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Météo/Météo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -72,10 +72,14 @@ class CityViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         cityName = textField.text
         
+        
         //Calling callback of getDatacity
         getDataCity(cityName: cityName!){ (ok, obj) in
             
             guard let city = obj else {
+                print("Estoy vacio :(")
+                self.errorMessage()
+                
                 return
             }
             
@@ -86,9 +90,8 @@ class CityViewController: UIViewController, UITextFieldDelegate {
             
             //It call
             DispatchQueue.main.async {
-                
                 self.photo.image = photo1
-                self.weatherTitle.text = city.name + " " + tempeture.description + "°C"
+                self.weatherTitle.text = city.name + " "+String(format: "%.2f",tempeture)+"°C"
                 self.weatherSubtitle.text = city.wDescription
                 self.tempMax.text = tempetureMin.description + "°C"
                 self.tempMin.text = tempetureMax.description + "°C"
@@ -99,6 +102,7 @@ class CityViewController: UIViewController, UITextFieldDelegate {
                 self.label2.isHidden = false
                 self.label3.isHidden = false
                 self.label4.isHidden = false
+                self.photo.isHidden = false
                 self.updateSaveButtonState()
                 
             }
@@ -139,6 +143,31 @@ class CityViewController: UIViewController, UITextFieldDelegate {
         // Disable the Save button if the text field is empty.
         let text = weatherTitle.text ?? ""
         saveButton.isEnabled = !text.isEmpty
+    }
+    
+    private func errorMessage(){
+        let alertController = UIAlertController(title: "Try again", message:
+            "There's not coincidences", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        photo.isHidden = true
+        photo.image = nil
+        weatherTitle.text = ""
+        weatherSubtitle.text = ""
+        tempMax.text = ""
+        tempMin.text = ""
+        presure.text = ""
+        humidity.text = ""
+        
+        label1.isHidden = true
+        label2.isHidden = true
+        label3.isHidden = true
+        label4.isHidden = true
+        updateSaveButtonState()
+        
+        
     }
     
     

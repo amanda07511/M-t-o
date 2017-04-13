@@ -1,21 +1,27 @@
 //
-//  CityTableViewController.swift
+//  DetailsTableViewController.swift
 //  Météo
 //
-//  Created by Amanda Michelle Marroquin Delgado on 29/03/2017.
+//  Created by Amanda Michelle Marroquin Delgado on 11/04/2017.
 //  Copyright © 2017 Amanda Michelle Marroquin Delgado. All rights reserved.
 //
 
 import UIKit
 
-class CityTableViewController: UITableViewController {
+
+class DetailsTableViewController: UITableViewController {
     
-    var cities = [City]()
+    //--->MARK: Properties
+    var id: Int?
+    var details = [Detail]()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        loadSampleCities()
+        details.removeAll();
+        loadDetails()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,36 +32,46 @@ class CityTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
+        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return cities.count
+        // #warning Incomplete implementation, return the number of rows
+        return details.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         // Table view cells are reused and should be dequeued using a cell identifier.
-        let cellIdentifier = "CityTableViewCell"
+        let cellIdentifier = "DetailsTableViewCell"
         
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CityTableViewCell  else {
-            fatalError("The dequeued cell is not an instance of CityTableViewCell.")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DetailsTableViewCell  else {
+            fatalError("The dequeued cell is not an instance of DetailsTableViewCell.")
         }
         
-        // Fetches the appropriate meal for the data source layout.
-        let city = cities[indexPath.row]
+        let detail = details[indexPath.row]
+        print(details.count)
         
+        let photo1 = UIImage(named: detail.icon)
+        let date = getDate(unixdate: detail.dt)
         
-        cell.titleLabel.text = city.name + " "+city.temp.description+"°C"
-        cell.minLabel.text = "min: "+city.tempmin.description+"°C"
-        cell.maxLabel.text = "max: "+city.tempmax.description+"°C"
-        cell.pressLabel.text = "pres: "+city.presure.description
-        cell.humLabel.text = "hum: "+city.humidity.description
-        cell.photoImageView.image = UIImage(named: city.icon)
+        let temp = detail.temp - 273.15
+        let tempmax = detail.tempmax - 273.15
+        let tempmin = detail.tempmin - 273.15
+        let morn = detail.morn - 273.15
+        let eve = detail.eve - 273.15
+        let night = detail.night - 273.15
+        
+        cell.titleLabel.text = date.description
+        cell.photoImageView.image = photo1
+        cell.weatherLabel.text = detail.description
+        cell.tempLabel.text = String(format: "%.2f", temp)+"°C"
+        cell.maxLabel.text = "max:"+String(format: "%.2f", tempmax)+"°C"
+        cell.minLabel.text = "min:"+String(format: "%.2f", tempmin)+"°C"
+        cell.mornLabel.text = "morn:"+String(format: "%.1f", morn)+"°C"
+        cell.eveLabel.text = "eve:"+String(format: "%.1f", eve)+"°C"
+        cell.nightLabel.text = "night:"+String(format: "%.1f", night)+"°C"
         
 
         return cell
@@ -98,9 +114,6 @@ class CityTableViewController: UITableViewController {
     */
 
     /*
-     
-     
-     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -110,29 +123,31 @@ class CityTableViewController: UITableViewController {
     }
     */
     
-    @IBAction func unwindToCitylList(sender: UIStoryboardSegue) {
-        
-        if let sourceViewController = sender.source as? CityViewController, let city = sourceViewController.city {
-            
-            // Add a new meal.
-            let newIndexPath = IndexPath(row: cities.count, section: 0)
-            
-            cities.append(city)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        }
-    }
-    
-    
-    
     //MARK: Private Methods
     
-    private func loadSampleCities() {
+    private func loadDetails() {
         
-        guard let city1 = City(id: 3014728, name: "Grenoble", wMain: "Clear", wDescription: "Clear Sky", temp: 12.5, tempmax: 19, tempmin: 5, presure: 95.5, humidity: 12.8, icon: "01d") else {
-            fatalError("Unable to instantiate city1")
+        getDataDetails(cityId: id!) { (ok, objs ) in
+            self.details = objs
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
-        cities += [city1]
-
+        
         
     }
+    
+    private func getDate(unixdate: Int) -> String {
+        if unixdate == 0 {return ""}
+        let date = NSDate(timeIntervalSince1970: TimeInterval(unixdate))
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateFormat = "MMM dd YYYY hh:mm a"
+        dayTimePeriodFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone!
+        let dateString = dayTimePeriodFormatter.string(from: date as Date)
+        return dateString
+    }
+    
+    
+
 }
